@@ -9,11 +9,39 @@
 <body class="container">
     <!-- here the header of the page with h1 or h2 tags -->
     <header class="row">
-
+        <section class="col-12 headerTitle">
+            <h1>Welcome to this game</h1>
+        </section>
     </header>
     <!-- here the nav bar that contains stars,moves,time,replay -->
     <nav class="row">
-
+        <!-- the section of stars it contains 3 stars -->
+        <section class="col-2 stars">
+            <span class="star fa fa-star"></span>
+            <span class="star fa fa-star"></span>
+            <span class="star fa fa-star"></span>
+        </section>
+        <!-- this section with col-1 class only for seperate between stars
+                and moves -->
+        <section class="col-1"></section>
+        <!-- the section of moves -->
+        <section class="col-2">
+            <span class="moves">moves</span>
+        </section>
+        <!-- this section with col-2 class only for seperate between moves
+                and time -->
+        <section class="col-2"></section>
+        <!-- the section of the timer -->
+        <section class="col-2">
+            <span class="timer">00:00</span>
+        </section>
+        <!-- this section with col-2 class only for seperate between time
+            and controls -->
+        <section class="col-2"></section>
+        <!-- the section of controls -->
+        <section class="col-1 controls">
+            <span class="replay clickable">&#8634;</span>
+        </section>
     </nav>
     <!-- here the main element that contains cards to be opened -->
     <main class="row">
