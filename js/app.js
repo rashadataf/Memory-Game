@@ -78,7 +78,6 @@ function shuffle(array) {
 function incMoves() {
   mvs = mvs + 1;
   counter.textContent = 'moves ' + mvs;
-  console.log('mvs modified');
   starRating();
 }
 // function to increase the time of the timer and make it in a specific format
