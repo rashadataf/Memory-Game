@@ -145,3 +145,105 @@
     -ms-user-select: none; 
     user-select: none;
 }
+
+/* Very small devices 300px and up */
+@media only screen and (min-width: 300px) {
+    .bar {
+        font-size: 20px;
+    }
+
+    .board {
+        height: 300px;
+    }
+
+    .cardSlot {
+        height: 75px;
+    }
+
+    .card {
+        width: 60px;
+        height: 60px;
+        font-size: 40px;
+    }
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .bar {
+        font-size: 30px;
+    }
+
+    .replay {
+        line-height: 40px;
+    }
+
+    .board {
+        height: 320px;
+    }
+
+    .cardSlot {
+        height: 80px;
+    }
+
+    .card {
+        width: 65px;
+        height: 65px;
+        font-size: 50px;
+    }
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .board {
+        height: 360px;
+    }
+
+    .cardSlot {
+        height: 90px;
+    }
+
+    .card {
+        width: 75px;
+        height: 75px;
+        font-size: 60px
+    }
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .board {
+        height: 400px;
+    }
+
+    .cardSlot {
+        height: 100px;
+    }
+
+    .card {
+        width: 85px;
+        height: 85px;
+        font-size: 70px;
+    }
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .board {
+        height: 445px;
+    }
+
+    .cardSlot {
+        height: 110px;
+    }
+
+    .card {
+        width: 95px;
+        height: 95px;
+        font-size: 80px;
+    }
+
+}
