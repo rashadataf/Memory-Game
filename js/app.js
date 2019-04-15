@@ -19,6 +19,11 @@ let minutes = 0;
 let seconds = 0;
 // the sep is just ':' symbol for seperate between minutes and seconds
 let sep = ':';
+// the counter is a variable that represent the span with the 'moves' class
+let counter = document.querySelector('.moves');
+// star is a like an array that have three elements(span)
+// each span represent a star 
+let star = document.getElementsByClassName('star');
 
 // this function to pick 8 cards randomly from a given array
 // and double them to 16 cards and put them in an array
@@ -55,4 +60,61 @@ function shuffle(array) {
   }
 
   return array;
+}
+
+// this function to increase the moves by one
+// and after increasing the moves it will call starRating() function
+function incMoves() {
+  mvs = mvs + 1;
+  counter.textContent = 'moves ' + mvs;
+  console.log('mvs modified');
+  starRating();
+}
+
+// starRating() function to make a test on the value of mvs variable
+// and make a choise based on the rating system i made
+// rating system
+// 3 stars   -------> 100% -----------10 moves
+// 2.5 stars -------> 83.33333333% ---15 moves
+// 2 stars   -------> 66.66666667% ---20 moves
+// 1.5 stars -------> 50% ------------25 moves
+// 1 star    -------> 33.33333333% ---30 moves
+// 0.5 star  -------> 16.66666667% ---35 moves
+// the stars will be displayed using the Font Awesome classes
+// fa-star represnt full black star
+// fa-star-half-full represent half full star
+// fa-star-o represent empty star or star just with the borders
+function starRating() {
+  switch (mvs) {
+    case 11: {
+      star[2].classList.remove('fa-star');
+      star[2].classList.add('fa-star-half-full');
+      break;
+    }
+    case 16: {
+      star[2].classList.remove('fa-star-half-full');
+      star[2].classList.add('fa-star-o');
+      break;
+    }
+    case 21: {
+      star[1].classList.remove('fa-star');
+      star[1].classList.add('fa-star-half-full');
+      break;
+    }
+    case 26: {
+      star[1].classList.remove('fa-star-half-full');
+      star[1].classList.add('fa-star-o');
+      break;
+    }
+    case 31: {
+      star[0].classList.remove('fa-star');
+      star[0].classList.add('fa-star-half-full');
+      break;
+    }
+    case 36: {
+      star[0].classList.remove('fa-star-half-full');
+      star[0].classList.add('fa-star-o');
+      break;
+    }
+  }
 }
