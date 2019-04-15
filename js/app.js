@@ -81,6 +81,15 @@ function incMoves() {
   console.log('mvs modified');
   starRating();
 }
+// function to increase the time of the timer and make it in a specific format
+function incTime() {
+  seconds += 1;
+  if (seconds === 60) {
+    seconds = seconds % 60;
+    minutes += 1;
+  }
+  timer.textContent = '' + minutes.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + sep + seconds.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false });
+}
 
 // starRating() function to make a test on the value of mvs variable
 // and make a choise based on the rating system i made
