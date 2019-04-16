@@ -346,7 +346,7 @@ replay.addEventListener('click', function () {
 // function to check the win state
 function checkForWin() {
   let newlyBoardCards = document.getElementsByClassName('card');
-  let winCards = 14;
+  let winCards = 0;
 
   // Get the modal
   let modal = document.getElementById('myModal');
