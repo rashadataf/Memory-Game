@@ -142,7 +142,7 @@ function starRating() {
 function startPlaying() {
   //this represent the array of cards when the game is palyed
   playingCards = shuffle(pickCards(cards));
-  winning = setInterval(checkForWin, 500);
+  winning = setInterval(checkForWin, 200);
   // here we will add the listeners to the click events of each card
   // whenever a card clicked a several things will happen
   for (let curCard in boardCards) {
@@ -189,14 +189,16 @@ function startPlaying() {
                 lastClicked.classList.remove("rotateAnimation");
                 firstClicked.classList.add("danceAnimation");
                 lastClicked.classList.add("danceAnimation");
-                firstClicked = null;
-                lastClicked = null;
-              }, 1100);
+              }, 1500);
               // here we are removing the dance animation from the tow opened cards to reuse it on other cards
               setTimeout(function () {
                 firstClicked.classList.remove("danceAnimation");
                 lastClicked.classList.remove("danceAnimation");
-              }, 1500);
+                setTimeout(function(){
+                  firstClicked = null;
+                  lastClicked = null;
+                },1000);
+              }, 500);
               // the moves will be increased by one
               incMoves();
             }
@@ -280,6 +282,9 @@ function stopPlaying() {
   }
   // the array of playing is being reseted
   playingCards = [];
+  // reset the firstClicked and lastClicked to their initial state
+  firstClicked = null;
+  lastClicked = null;
   // stopping the function that checking if the player has won
   clearInterval(winning);
 }
@@ -300,7 +305,7 @@ replay.addEventListener('click', function () {
 // function to check the win state
 function checkForWin() {
   let newlyBoardCards = document.getElementsByClassName('card');
-  let winCards = 0;
+  let winCards = 14;
 
   // Get the modal
   let modal = document.getElementById('myModal');
@@ -309,7 +314,7 @@ function checkForWin() {
   let span = document.querySelector(".close");
 
   // Get the <p> element that contains the message of the modal
-  let pargraph = document.querySelector('message');
+  let pargraph = document.querySelector('.message');
   // a loop to see how many cards have been opened
   for (curCard of newlyBoardCards) {
     if (curCard.classList.contains('openCard')) {
@@ -319,20 +324,23 @@ function checkForWin() {
   // if the number of opened cards is 16 then it is a winning status
   if (winCards === 16) {
     // creating a section
-    let newSection = document.createElement('section');
-    // making the newly created section equals to the section of rating stars
-    newSection=document.querySelector('stars');
+     
+    // document.createElement('section');
+    let curStars = document.getElementsByClassName('star');
+    
     // creating the message of the pargraph
     pargraph.textContent='Congratulations you have passed the memory game and your memory'+
-    ' is very good.Your moves are '+mvs +' and your rating is';
+    ' is very good.Your moves are '+ mvs;
     // append the stars section to the paragraph
-    pargraph.appendChild(newSection);
+    pargraph.innerHTML+= "<br>" +' and your rating is' + document.querySelector('.stars').innerHTML;
     // adding the time to the pargraph message
-    pargraph.textContent=pargraph.textContent+' and your time is ';
+    // pargraph.textContent=pargraph.textContent+' and your time is ';
     // creating section for time to add it to the pargraph
-    timeSection = document.createElement('section');
-    timeSection = document.querySelector('.timer');
-    pargraph.appendChild(timeSection);
+    // timeSection = document.createElement('span');
+    // timeSection.textContent = document.querySelector('.timer').textContent;
+    // pargraph.appendChild(timeSection);
+    pargraph.innerHTML+= "<br>" + ' and your time is ' + document.querySelector('.timer').innerHTML;
+    pargraph.innerHTML+= "<br>" +"do you want to play again"
     // make the modal appear
     modal.style.display = "block";
     // stop the playing
