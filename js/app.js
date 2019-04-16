@@ -42,6 +42,17 @@ let isTimeOn = false;
 // winning is a variable to handle the function that will check if the player has finished the game
 let winning = null;
 
+// creating three spans that will represent the stars in the modal
+let star1=document.createElement('span');
+let star2=document.createElement('span');
+let star3=document.createElement('span');
+star1.classList.add('fa');
+star2.classList.add('fa');
+star3.classList.add('fa');
+star1.classList.add('fa-star');
+star2.classList.add('fa-star');
+star3.classList.add('fa-star');
+
 // this function to pick 8 cards randomly from a given array
 // and double them to 16 cards and put them in an array
 // and return it . 
@@ -110,31 +121,43 @@ function starRating() {
     case 11: {
       star[2].classList.remove('fa-star');
       star[2].classList.add('fa-star-half-full');
+      star3.classList.remove('fa-star');
+      star3.classList.add('fa-star-half-full');
       break;
     }
     case 16: {
       star[2].classList.remove('fa-star-half-full');
       star[2].classList.add('fa-star-o');
+      star3.classList.remove('fa-star-half-full');
+      star3.classList.add('fa-star-o');
       break;
     }
     case 21: {
       star[1].classList.remove('fa-star');
       star[1].classList.add('fa-star-half-full');
+      star2.classList.remove('fa-star');
+      star2.classList.add('fa-star-half-full');
       break;
     }
     case 26: {
       star[1].classList.remove('fa-star-half-full');
       star[1].classList.add('fa-star-o');
+      star2.classList.remove('fa-star-half-full');
+      star2.classList.add('fa-star-o');
       break;
     }
     case 31: {
       star[0].classList.remove('fa-star');
       star[0].classList.add('fa-star-half-full');
+      star1.classList.remove('fa-star');
+      star1.classList.add('fa-star-half-full');
       break;
     }
     case 36: {
       star[0].classList.remove('fa-star-half-full');
       star[0].classList.add('fa-star-o');
+      star1.classList.remove('fa-star-half-full');
+      star1.classList.add('fa-star-o');
       break;
     }
   }
@@ -289,6 +312,34 @@ function stopPlaying() {
       curStar.classList.add('fa-star');
     }
   }
+
+  // reseting the span star1 to their initial state
+  if (star1.classList.contains('fa-star-o')) {
+    star1.classList.remove('fa-star-o');
+    star1.classList.add('fa-star');
+  }
+  else if (star1.classList.contains('fa-star-half-full')) {
+    star1.classList.remove('fa-star-half-full');
+    star1.classList.add('fa-star');
+  }
+  // reseting the span star2 to their initial state
+  if (star2.classList.contains('fa-star-o')) {
+    star2.classList.remove('fa-star-o');
+    star2.classList.add('fa-star');
+  }
+  else if (star2.classList.contains('fa-star-half-full')) {
+    star2.classList.remove('fa-star-half-full');
+    star2.classList.add('fa-star');
+  }
+  // reseting the span star3 to their initial state
+  if (star3.classList.contains('fa-star-o')) {
+    star3.classList.remove('fa-star-o');
+    star3.classList.add('fa-star');
+  }
+  else if (star3.classList.contains('fa-star-half-full')) {
+    star3.classList.remove('fa-star-half-full');
+    star3.classList.add('fa-star');
+  }
   // here we are resetting the counter to it's initial state
   counter.textContent = 'moves ';
   // reset the mvs variable to it's initial state
@@ -332,6 +383,7 @@ function stopPlaying() {
 
 // adding the listener of the click event on the replay symbol
 replay.addEventListener('click', function () {
+  isPlaying=true;
   // stopping the game
   setTimeout(function () {
     stopPlaying();
@@ -370,8 +422,13 @@ function checkForWin() {
     // creating the message of the pargraph
     pargraph.innerHTML='Congratulations you have passed the memory game and your memory'+
     ' is very good.' + "<br>" + 'Your moves are '+ mvs;
-    // append the stars section to the paragraph
-    pargraph.innerHTML+= "<br>" +' your rating is' + document.querySelector('.stars').innerHTML;
+
+    let r = document.querySelectorAll('.star');
+    // append the stars to the paragraph
+    pargraph.innerHTML+= "<br>" +' your rating is ' ;
+    pargraph.appendChild(star1);
+    pargraph.appendChild(star2);
+    pargraph.appendChild(star3);
     // adding the time to the pargraph message
     pargraph.innerHTML+= "<br>" + ' your time is ' + document.querySelector('.timer').innerHTML;
     pargraph.innerHTML+= "<br>" +"do you want to play again" + "<br>"
@@ -382,6 +439,7 @@ function checkForWin() {
     // the click listener on the btn 'Yes' to play again
     yesBtn.addEventListener('click',function(){
       modal.style.display = "none";
+      isPlaying=true;
       startPlaying();
     });
     // place the text 'Yes' in the button
