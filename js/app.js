@@ -19,6 +19,8 @@ let minutes = 0;
 let seconds = 0;
 // the sep is just ':' symbol for seperate between minutes and seconds
 let sep = ':';
+// isPlaying variable to indicate wheather the playing is on or off
+let isPlaying = true;
 // the counter is a variable that represent the span with the 'moves' class
 let counter = document.querySelector('.moves');
 // star is a like an array that have three elements(span)
@@ -147,86 +149,124 @@ function startPlaying() {
   // whenever a card clicked a several things will happen
   for (let curCard in boardCards) {
     boardCards[curCard].addEventListener('click', function () {
-      // after clicking we will see if timer is already working or not
-      // if it is off we will turn it on
-      // otherwise nothing will happen
-      if (isTimeOn === false) {
-        timing = setInterval(incTime, 1000);
-        isTimeOn = true;
-      }
-      // here we are testing to see if the clicked card is not an opened card
-      if (!boardCards[curCard].classList.contains('openCard')) {
-        // here we will make the first clicked card stored in firstClicked variable
-        // and start the animation of rotation when it is clicked
-        // and change the style of the clicked card
-        if (firstClicked === null && lastClicked === null) {
-          firstClicked = boardCards[curCard];
-          firstClicked.classList.add("rotateAnimation");
-          firstClicked.style['background-image'] = 'linear-gradient(to bottom right, #8da8a7, #eed2f7)';
-          firstClicked.textContent = playingCards[curCard];
+      // check wheather the game in a stop mode or not
+      if (isPlaying === false && boardCards[curCard].textContent === "") {
+        // Get the modal
+        let modal = document.getElementById('myModal');
+
+        // Get the <span> element that closes the modal
+        let span = document.querySelector(".close");
+
+        // Get the <p> element that contains the message of the modal
+        let pargraph = document.querySelector('.message');
+        // create the paragraph message
+        pargraph.innerHTML = "Please tou have to restart the game just press the replay button on the right"+
+        "<br>" + "or just click on restart" + "<br>";
+        // create restart button
+        let resButton = document.createElement('button');
+        // handle the click of resButton
+        resButton.addEventListener('click',function(){
+          modal.style.display = "none";
+          isPlaying = true;
+          startPlaying();
+        });
+        resButton.textContent = 'Restart';
+        // append resButton to the paragraph
+        pargraph.appendChild(resButton);
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+          modal.style.display = "none";
         }
-        else if (firstClicked != null && lastClicked === null) {
-          // here we are testing to see if the clicked card is not the same card that we clicked before
-          // so the second clicked card will be stored in lastClicked variable
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+        modal.style.display = "block";
+      }
+      else {
+        // after clicking we will see if timer is already working or not
+        // if it is off we will turn it on
+        // otherwise nothing will happen
+        if (isTimeOn === false) {
+          timing = setInterval(incTime, 1000);
+          isTimeOn = true;
+        }
+        // here we are testing to see if the clicked card is not an opened card
+        if (!boardCards[curCard].classList.contains('openCard')) {
+          // here we will make the first clicked card stored in firstClicked variable
           // and start the animation of rotation when it is clicked
           // and change the style of the clicked card
-          if (firstClicked != boardCards[curCard]) {
-            lastClicked = boardCards[curCard];
-            lastClicked.classList.add("rotateAnimation");
-            lastClicked.style['background-image'] = 'linear-gradient(to bottom right, #8da8a7, #eed2f7)';
-            lastClicked.textContent = playingCards[curCard];
-            // here we are testing the tow clicked cards to see if they have tha same content
-            // if they are mached the 'openCard' class will be assigned to them to tell us that
-            // card has been opened
-            // secondly the rotate animation will be removed to reuse it in other clicked cards
-            // finally the dance animation will start on the tow opened cards
-            // finally firstClicked and lastClicked will be null to repeat the operation on other cards
-            if (firstClicked.textContent === lastClicked.textContent) {
-              setTimeout(function () {
-                firstClicked.classList.add("openCard");
-                lastClicked.classList.add("openCard");
-                firstClicked.classList.remove("rotateAnimation");
-                lastClicked.classList.remove("rotateAnimation");
-                firstClicked.classList.add("danceAnimation");
-                lastClicked.classList.add("danceAnimation");
-              }, 1500);
-              // here we are removing the dance animation from the tow opened cards to reuse it on other cards
-              setTimeout(function () {
-                firstClicked.classList.remove("danceAnimation");
-                lastClicked.classList.remove("danceAnimation");
-                setTimeout(function(){
+          if (firstClicked === null && lastClicked === null) {
+            firstClicked = boardCards[curCard];
+            firstClicked.classList.add("rotateAnimation");
+            firstClicked.style['background-image'] = 'linear-gradient(to bottom right, #8da8a7, #eed2f7)';
+            firstClicked.textContent = playingCards[curCard];
+          }
+          else if (firstClicked != null && lastClicked === null) {
+            // here we are testing to see if the clicked card is not the same card that we clicked before
+            // so the second clicked card will be stored in lastClicked variable
+            // and start the animation of rotation when it is clicked
+            // and change the style of the clicked card
+            if (firstClicked != boardCards[curCard]) {
+              lastClicked = boardCards[curCard];
+              lastClicked.classList.add("rotateAnimation");
+              lastClicked.style['background-image'] = 'linear-gradient(to bottom right, #8da8a7, #eed2f7)';
+              lastClicked.textContent = playingCards[curCard];
+              // here we are testing the tow clicked cards to see if they have tha same content
+              // if they are mached the 'openCard' class will be assigned to them to tell us that
+              // card has been opened
+              // secondly the rotate animation will be removed to reuse it in other clicked cards
+              // finally the dance animation will start on the tow opened cards
+              // finally firstClicked and lastClicked will be null to repeat the operation on other cards
+              if (firstClicked.textContent === lastClicked.textContent) {
+                setTimeout(function () {
+                  firstClicked.classList.add("openCard");
+                  lastClicked.classList.add("openCard");
+                  firstClicked.classList.remove("rotateAnimation");
+                  lastClicked.classList.remove("rotateAnimation");
+                  firstClicked.classList.add("danceAnimation");
+                  lastClicked.classList.add("danceAnimation");
+                }, 1500);
+                // here we are removing the dance animation from the tow opened cards to reuse it on other cards
+                setTimeout(function () {
+                  firstClicked.classList.remove("danceAnimation");
+                  lastClicked.classList.remove("danceAnimation");
+                  setTimeout(function () {
+                    firstClicked = null;
+                    lastClicked = null;
+                  }, 1000);
+                }, 500);
+                // the moves will be increased by one
+                incMoves();
+              }
+              // here the code in case of the tow clicked cards were not the same
+              // an animation of shake will start on both cards
+              // also the rotate animation will be removed to reuse it on other cards
+              // and the shake animation will be removed also for the same reason
+              else {
+                setTimeout(function () {
+                  firstClicked.classList.add("shakeAnimation");
+                  lastClicked.classList.add("shakeAnimation");
+                }, 1100);
+                // here we are removing the animations and we are changing the style of the both cards
+                // and the firstClicked and lastClicked are returned to null
+                setTimeout(function () {
+                  firstClicked.classList.remove("rotateAnimation");
+                  lastClicked.classList.remove("rotateAnimation");
+                  firstClicked.classList.remove("shakeAnimation");
+                  lastClicked.classList.remove("shakeAnimation");
+                  firstClicked.textContent = "";
+                  firstClicked.style['background-image'] = 'linear-gradient(to bottom right,#193857,#35a56d,#8bdb3a)';
+                  lastClicked.textContent = "";
+                  lastClicked.style['background-image'] = 'linear-gradient(to bottom right,#193857,#35a56d,#8bdb3a)';
                   firstClicked = null;
                   lastClicked = null;
-                },1000);
-              }, 500);
-              // the moves will be increased by one
-              incMoves();
-            }
-            // here the code in case of the tow clicked cards were not the same
-            // an animation of shake will start on both cards
-            // also the rotate animation will be removed to reuse it on other cards
-            // and the shake animation will be removed also for the same reason
-            else {
-              setTimeout(function () {
-                firstClicked.classList.add("shakeAnimation");
-                lastClicked.classList.add("shakeAnimation");
-              }, 1100);
-              // here we are removing the animations and we are changing the style of the both cards
-              // and the firstClicked and lastClicked are returned to null
-              setTimeout(function () {
-                firstClicked.classList.remove("rotateAnimation");
-                lastClicked.classList.remove("rotateAnimation");
-                firstClicked.classList.remove("shakeAnimation");
-                lastClicked.classList.remove("shakeAnimation");
-                firstClicked.textContent = "";
-                firstClicked.style['background-image'] = 'linear-gradient(to bottom right,#193857,#35a56d,#8bdb3a)';
-                lastClicked.textContent = "";
-                lastClicked.style['background-image'] = 'linear-gradient(to bottom right,#193857,#35a56d,#8bdb3a)';
-                firstClicked = null;
-                lastClicked = null;
-              }, 2000);
-              // the moves will be increased by one
-              incMoves();
+                }, 2000);
+                // the moves will be increased by one
+                incMoves();
+              }
             }
           }
         }
@@ -237,6 +277,7 @@ function startPlaying() {
 
 // this function to stop the game
 function stopPlaying() {
+  isPlaying = false;
   // here we are resetting the stars to their initial state
   for (let curStar of star) {
     if (curStar.classList.contains('fa-star-o')) {
@@ -323,28 +364,46 @@ function checkForWin() {
   }
   // if the number of opened cards is 16 then it is a winning status
   if (winCards === 16) {
-    // creating a section
-     
     // document.createElement('section');
     let curStars = document.getElementsByClassName('star');
     
     // creating the message of the pargraph
-    pargraph.textContent='Congratulations you have passed the memory game and your memory'+
-    ' is very good.Your moves are '+ mvs;
+    pargraph.innerHTML='Congratulations you have passed the memory game and your memory'+
+    ' is very good.' + "<br>" + 'Your moves are '+ mvs;
     // append the stars section to the paragraph
-    pargraph.innerHTML+= "<br>" +' and your rating is' + document.querySelector('.stars').innerHTML;
+    pargraph.innerHTML+= "<br>" +' your rating is' + document.querySelector('.stars').innerHTML;
     // adding the time to the pargraph message
-    // pargraph.textContent=pargraph.textContent+' and your time is ';
-    // creating section for time to add it to the pargraph
-    // timeSection = document.createElement('span');
-    // timeSection.textContent = document.querySelector('.timer').textContent;
-    // pargraph.appendChild(timeSection);
-    pargraph.innerHTML+= "<br>" + ' and your time is ' + document.querySelector('.timer').innerHTML;
-    pargraph.innerHTML+= "<br>" +"do you want to play again"
-    // make the modal appear
-    modal.style.display = "block";
-    // stop the playing
-    stopPlaying();
+    pargraph.innerHTML+= "<br>" + ' your time is ' + document.querySelector('.timer').innerHTML;
+    pargraph.innerHTML+= "<br>" +"do you want to play again" + "<br>"
+    // create a button to play again
+    let yesBtn = document.createElement('button');
+    // create a button to cancle
+    let cancleBtn = document.createElement('button');
+    // the click listener on the btn 'Yes' to play again
+    yesBtn.addEventListener('click',function(){
+      modal.style.display = "none";
+      startPlaying();
+    });
+    // place the text 'Yes' in the button
+    yesBtn.textContent='Yes';
+    // add the Yes Button to the message
+    pargraph.appendChild(yesBtn);
+    // the click listener on the btn 'cancle' to just cancle
+    cancleBtn.addEventListener('click', function () {
+      stopPlaying();
+      modal.style.display = "none";
+    });
+    // place the text 'Cancle' in the button
+    cancleBtn.textContent = 'Cancle';
+    // add the Cancle Button to the message
+    pargraph.appendChild(cancleBtn);
+    // set delay to insure the animation has been stopped
+    setTimeout(function(){
+      // make the modal appear
+      modal.style.display = "block";
+      // stop the playing
+      stopPlaying();
+    },1700);
     // When the user clicks on <span> (x), close the modal
     span.onclick = function () {
       modal.style.display = "none";
