@@ -416,14 +416,9 @@ function checkForWin() {
   }
   // if the number of opened cards is 16 then it is a winning status
   if (winCards === 16) {
-    // document.createElement('section');
-    let curStars = document.getElementsByClassName('star');
-    
     // creating the message of the pargraph
     pargraph.innerHTML='Congratulations you have passed the memory game and your memory'+
     ' is very good.' + "<br>" + 'Your moves are '+ mvs;
-
-    let r = document.querySelectorAll('.star');
     // append the stars to the paragraph
     pargraph.innerHTML+= "<br>" +' your rating is ' ;
     pargraph.appendChild(star1);
